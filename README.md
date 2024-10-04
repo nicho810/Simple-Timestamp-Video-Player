@@ -6,7 +6,7 @@ This is a simple timestamp video player that allows you to add timestamps to a v
 
 ## How to use
 
-- open the live web.
+- open the live web [here](https://simple-timestamp-video-player.ioatlas.com/).
 - click the left panel to select a video file.
 - click the "Choose" button on top-right to add a timestamp json file.
 - after adding the timestamp json file, it will be displayed in the timestamp panel. and take screenshot of the video at the timestamp.
