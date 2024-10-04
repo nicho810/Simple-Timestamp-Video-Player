@@ -14,12 +14,22 @@ This is a simple timestamp video player that allows you to add timestamps to a v
 
 *Note: The timestamp json file should be in the following format:*
 ```
-[
-    {
-        "timestamp": "00:00:00",
-        "description": "This is a description of the timestamp"
-    }
-]
+{
+    "timestamps": [
+      {
+        "time": "00:00:05",
+        "comment": "Introduction starts here"
+      },
+      {
+        "time": "00:00:12",
+        "comment": "Main topic discussion begins"
+      },
+      {
+        "time": "00:00:17",
+        "comment": "Conclusion and summary"
+      }
+    ]
+  }
 ```
 
 *Note: add timestamp function is not dev yet.*
