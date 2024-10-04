@@ -181,7 +181,7 @@
     margin-top: 10px;
     margin-left: 0px; /* Add some space between the heading and the button */
     margin-right: 0px;
-    margin-bottom: 8px;
+    margin-bottom: 0px;
 }
 
 .timestamp-button:hover {
