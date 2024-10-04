@@ -127,7 +127,7 @@
 .timestamp-button .screenshot {
     width: 100%;
     height: auto;
-    max-width: 150px; /* Adjust this value as needed */
+    /*max-width: 150px; /* Adjust this value as needed */
     border-radius: 0.25rem;
     margin-bottom: 0.5rem;
     display: block; /* Ensure the image is displayed */

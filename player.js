@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Force button state
         chooseTimestampBtn.disabled = false;
-        addTimestampBtn.disabled = false;
+        addTimestampBtn.disabled = true; //disable this button now, not develop yet
         console.log('Choose button disabled:', chooseTimestampBtn.disabled);
         console.log('Add button disabled:', addTimestampBtn.disabled);
     }
@@ -110,9 +110,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displayTimestamps() {
         timestampList.innerHTML = '';
-        timestamps.forEach(timestamp => {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        
+        const capturePromises = timestamps.map(timestamp => {
             const button = createTimestampButton(timestamp);
             timestampList.appendChild(button);
+            return captureVideoFrame(timestamp, button, canvas, context); // Pass the entire timestamp object
+        });
+
+        Promise.all(capturePromises).then(() => {
+            console.log('All frames captured');
         });
     }
 
@@ -120,15 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const button = document.createElement('button');
         button.classList.add('timestamp-button');
         
-        const timeText = document.createElement('span');
-        timeText.textContent = timestamp.time;
-        timeText.classList.add('time-text');
-        button.appendChild(timeText);
-        
-        const comment = document.createElement('span');
-        comment.textContent = timestamp.comment;
-        comment.classList.add('comment');
-        button.appendChild(comment);
+        // We'll populate the button content in captureVideoFrame function
         
         button.addEventListener('click', function() {
             const time = parseTimestamp(timestamp.time);
@@ -164,8 +164,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Update this function to return a promise
-    function captureVideoFrame(time, button, canvas, context) {
+    function captureVideoFrame(timestamp, button, canvas, context) {
         return new Promise((resolve) => {
+            const time = parseTimestamp(timestamp.time);
             player.currentTime(time);
             player.one('seeked', function() {
                 canvas.width = player.videoWidth() / 4;  // Adjust size as needed
@@ -183,16 +184,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Add time text
                 const timeText = document.createElement('span');
-                timeText.textContent = formatTime(time);
+                timeText.textContent = timestamp.time;
                 timeText.classList.add('time-text');
                 button.appendChild(timeText);
                 
-                // Add comment (placeholder for now)
+                // Add comment using the actual comment from the timestamp data
                 const comment = document.createElement('span');
-                comment.textContent = 'Add a comment';
+                comment.textContent = timestamp.comment;
                 comment.classList.add('comment');
                 button.appendChild(comment);
-                
+
                 resolve();
             });
         });
