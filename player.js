@@ -3,9 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fluid: true,
         responsive: true,
         aspectRatio: '16:9',
-        // Add custom classes to the player
         className: 'vjs-custom-theme',
-        // Customize control bar
         controlBar: {
             children: [
                 'playToggle',
@@ -16,8 +14,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 'progressControl',
                 'fullscreenToggle',
             ],
+        },
+        // Enable double-click to toggle fullscreen
+        userActions: {
+            doubleClick: true
         }
     });
+
+    console.log('Setting up player');
+
     const fileInput = document.getElementById('file-input');
     const timestampList = document.getElementById('timestamp-list');
     const videoContainer = document.getElementById('video-container');
@@ -46,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function showPlaceholder() {
         console.log('Showing placeholder');
         videoPlaceholder.style.display = 'flex';
-        player.hide();
+        player.el().style.display = 'none';
         videoSelected = false;
         disableTimestampButtons();
     }
@@ -54,18 +59,54 @@ document.addEventListener('DOMContentLoaded', function() {
     function hidePlaceholder() {
         console.log('Hiding placeholder');
         videoPlaceholder.style.display = 'none';
-        player.show();
+        player.el().style.display = 'block';
         videoSelected = true;
         enableTimestampButtons();
         
-        // Force button state
         chooseTimestampBtn.disabled = false;
-        addTimestampBtn.disabled = true; //disable this button now, not develop yet
+        addTimestampBtn.disabled = true;
         console.log('Choose button disabled:', chooseTimestampBtn.disabled);
         console.log('Add button disabled:', addTimestampBtn.disabled);
+
+        player.addClass('vjs-keep-control-bar-visible');
+        
+        // Force player to show
+        player.show();
     }
 
     showPlaceholder(); // Initially show the placeholder
+
+    player.ready(function() {
+        console.log('Player is ready');
+        
+        player.on('play', function() {
+            console.log('Video started playing');
+        });
+
+        player.on('pause', function() {
+            console.log('Video paused');
+        });
+
+        player.on('loadedmetadata', function() {
+            console.log('Video metadata loaded');
+        });
+
+        // Add more specific event listeners
+        player.on('dblclick', function() {
+            console.log('Double click detected on video (from Video.js event)');
+        });
+
+        player.on('fullscreenchange', function() {
+            console.log('Fullscreen changed:', player.isFullscreen());
+        });
+    });
+
+    // Add a click event listener to the video element itself
+    const videoElement = player.el().querySelector('video');
+    videoElement.addEventListener('dblclick', function(e) {
+        console.log('Double click detected on video element (from raw event listener)');
+        e.preventDefault(); // Prevent default behavior
+    });
 
     videoContainer.addEventListener('click', function(e) {
         if (!videoSelected) {
@@ -82,6 +123,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const fileURL = URL.createObjectURL(file);
             player.src({ type: file.type, src: fileURL });
             hidePlaceholder();
+            player.play().then(() => {
+                console.log('Video playback started');
+            }).catch((error) => {
+                console.error('Error auto-playing video:', error);
+            });
         }
     });
 
