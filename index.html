@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player with Timestamps</title>
+    <!-- Video.js CSS -->
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/@videojs/themes@1/dist/sea/index.css" rel="stylesheet">
+    <!-- Shadcn UI CSS (assuming you have a separate file) -->
+    <link href="shadcn-ui.css" rel="stylesheet" />
+    <link href="video-js.min.css" rel="stylesheet">
+    <link href="custom-videojs.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .video-panel {
+            width: 80%;
+            padding: 0;
+            box-sizing: border-box;
+            margin-right: 10px; /* Add margin to the right of the video panel */
+        }
+        .timestamp-panel {
+            width: 20%;
+            padding: 20px;
+            height: 100vh;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="video-panel" id="video-container">
+            <video-js id="my-video" class="video-js vjs-theme-sea" controls preload="auto" width="100%" height="auto">
+                <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider upgrading to a
+                    web browser that <a href="https://videojs.com/html5-video-support/" target="_blank" rel="noopener noreferrer">supports HTML5 video</a>
+                </p>
+            </video-js>
+            <div id="video-placeholder" class="video-placeholder">
+                <p>Click to select a video or drag and drop a video file here</p>
+            </div>
+            <input type="file" id="file-input" accept="video/*" class="hidden-input" />
+        </div>
+        <div class="timestamp-panel">
+            <div class="timestamp-header">
+                <h2 class="timestamp-heading">Timestamps</h2>
+                <button class="timestamp-button-choose" id="choose-timestamp-btn" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Choose
+                </button>
+            </div>
+            <div id="timestamp-list" class="timestamp-list"></div>
+            <div class="timestamp-footer">
+                <button class="timestamp-button-add" id="add-timestamp-btn" disabled>
+                    Add Timestamp
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <input type="file" id="timestamp-file-input" accept=".json" style="display: none;" />
+    <!-- Video.js JavaScript -->
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="player.js"></script>
+</body>
+</html>

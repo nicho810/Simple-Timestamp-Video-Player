@@ -1,0 +1,46 @@
+/* Custom Video.js theme */
+.vjs-custom-theme {
+    /* Custom styles for the player container */
+    background-color: #265e95;
+}
+
+.vjs-custom-theme .vjs-big-play-button {
+    /* Custom styles for the big play button */
+    background-color: #e74c3c;
+    border-color: #c0392b;
+}
+
+.vjs-custom-theme .vjs-control-bar {
+    /* Custom styles for the control bar */
+    background-color: rgba(54, 230, 63, 0.7);
+}
+
+.vjs-custom-theme .vjs-button > .vjs-icon-placeholder:before {
+    /* Custom styles for the control bar icons */
+    color: #ecf0f1;
+}
+
+.vjs-custom-theme .vjs-play-progress,
+.vjs-custom-theme .vjs-volume-level {
+    /* Custom styles for the progress bar and volume bar */
+    background-color: #e74c3c;
+}
+
+.vjs-custom-theme .vjs-slider {
+    /* Custom styles for sliders (progress bar background, volume bar background) */
+    background-color: rgba(236, 240, 241, 0.3);
+}
+
+.vjs-custom-theme .vjs-load-progress {
+    /* Custom styles for the load progress */
+    background: rgba(236, 240, 241, 0.5);
+}
+
+.vjs-custom-theme .vjs-big-play-button:hover{
+    background-color: #1cdd1c; 
+}
+.vjs-custom-theme .vjs-play-progress:hover,
+.vjs-custom-theme .vjs-volume-level:hover {
+    /* Hover effects */
+    background-color: #c0392b;
+}
